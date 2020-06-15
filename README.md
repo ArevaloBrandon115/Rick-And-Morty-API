@@ -4,4 +4,4 @@ This page contains these components:
 - Search bar
 - Search result list
 - Information of Episode
-- History component (displayed at all times)
+- History module (displayed at all times)
