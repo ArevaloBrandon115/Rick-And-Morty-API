@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Rick and Morty App</title>
+
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- bootstrap link -->
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		/>
+	</head>
+
+	<body>
+		<div id="episodes" v-cloak>
+			<div class="jumbotron jumbotron-fluid">
+				<div class="row">
+					<!-- title -->
+					<div class="container col-8">
+						<div class="col-lg">
+							<h1 class="display-2">Rick and Morty Apps</h1>
+							<p class="lead">Search Rick and Morty episodes</p>
+						</div>
+
+						<!-- user input -->
+						<div class="col" v-show="showbar">
+							<div class="row">
+								<input
+									type="text"
+									class="form-control"
+									placeholder="episode name?"
+									v-model="nameInput"
+								/>
+							</div>
+							<br />
+							<div class="row">
+								<button
+									v-bind:disabled="nameInput.length==0"
+									@click="searchName"
+									class="btn btn-dark"
+								>
+									Search
+								</button>
+							</div>
+						</div>
+
+						<!-- show list -->
+						<div class="col" v-show="showlist && !showbar">
+							<div clas="col">
+								<span class="h2">Search results: {{ listSize }}</span>
+							</div>
+							<br />
+							<div class="col" v-for="episode in episodeNames.results">
+								<label refs="a" @click="getByID(episode.id)">
+									{{episode.name}}
+								</label>
+								<hr />
+							</div>
+						</div>
+
+						<!-- showing information -->
+						<div class="col" v-show="showResult">
+							<div class="row">
+								<div class="col">
+									<img
+										class="img-thumbnail border-0"
+										v-bind:src="defaultPicture"
+									/>
+								</div>
+								<div class="col">
+									<div>
+										<ul class="list-group">
+											<li class="list-group-item h3" style="border: none;">
+												{{ idSearch.name}}
+											</li>
+											<li class="list-group-item" style="border: none;">
+												<strong>Air date:</strong>
+												{{ idSearch.air_date }}
+											</li>
+											<li class="list-group-item" style="border: none;">
+												<strong>Episode:</strong>
+												{{ idSearch.episode }}
+											</li>
+											<li class="list-group-item" style="border: none;">
+												<strong>Published on:</strong>
+												{{ idSearch.created }}
+											</li>
+										</ul>
+									</div>
+									<div>
+										<button @click="searchAgain" class="btn btn-dark">
+											new search
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- custom module for history -->
+					<div class="col-4 text-white bg-dark lead">
+						Search History
+						<history-component
+							v-bind:history-tracker="historyTracker"
+						></history-component>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- axios, app.js , vue scriptes needed -->
+		<script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="app.js" type="text/javascript"></script>
+	</body>
+</html>
